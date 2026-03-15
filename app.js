@@ -56,8 +56,7 @@ function addBasket(id) {
     } else {
         basket.push({ id, count: 1 })
     }
-    proCount.innerHTML =`<span class="absolute left-auto -ml-1 -top-1 rounded-full bg-red-500 px-1 py-0 text-xs text-white">${basket.length}</span>
-</span>`
+    proCount.innerHTML = basket.length
     showBasket()
 }
 function remove(id) {
@@ -68,15 +67,19 @@ function remove(id) {
     } else {
         basket = basket.filter(n => n.id !== id)
         total.innerHTML = ""
+        proCount.innerHTML = basket.length
     }
+    if(basket.length === 0){proCount.innerHTML =" "}
     showBasket()
 }
 function delet(id) {
     let index = basket.findIndex(n => n.id === id);
     if (index !== -1) {
         basket.splice(index, 1)
+        proCount.innerHTML = basket.length
         total.innerHTML = ""
     }
+    if(basket.length === 0){proCount.innerHTML =" "}
     showBasket();
 }
 
@@ -86,8 +89,8 @@ let total = document.getElementById("total")
 function showBasket() {
     sebet.innerHTML = ""
     let totalPrice = 0
-    if (basket.length === 0) { sebet.innerHTML = `<p class="text-grey-500 text-lg font-bold">Səbət Boşdur!</p>` }
-    basket.map(({ id, count }) => {
+    if (basket.length === 0) {sebet.innerHTML =`<p class="text-grey-500 text-lg font-bold">Səbət Boşdur!</p>` }
+    basket.map(({id,count}) => {
         const product = allProducts.find(pro => pro.id === id);
         totalPrice += product.price * count;
 
